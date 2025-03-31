@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
@@ -37,12 +39,11 @@ export default function Home() {
               >
                 Search
               </button>
-              <button
-                type="button"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Advanced
-              </button>
+              <Link href="/advanced-search">
+                <a className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  Advanced Search
+                </a>
+              </Link>
             </form>
           </div>
         </div>
@@ -52,9 +53,9 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-gray-900">Featured Tenders</h2>
-                <a href="/tenders" className="text-blue-600 hover:text-blue-800">
-                  View All
-                </a>
+                <Link href="/tenders">
+                  <a className="text-blue-600 hover:text-blue-800">View All</a>
+                </Link>
               </div>
               <div className="space-y-4">
                 <div className="border border-gray-200 rounded-lg p-4 hover:bg-blue-50 transition-colors">
@@ -93,72 +94,72 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Browse by Category</h2>
               <div className="grid grid-cols-2 gap-3">
-                <a 
-                  href="/tenders?category=construction"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-900">Construction</span>
-                </a>
-                <a 
-                  href="/tenders?category=it"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-900">IT & Technology</span>
-                </a>
-                <a 
-                  href="/tenders?category=healthcare"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-900">Healthcare</span>
-                </a>
-                <a 
-                  href="/tenders?category=education"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors"
-                >
-                  <span className="text-sm font-medium text-gray-900">Education</span>
-                </a>
+                <Link href="/tenders?category=construction">
+                  <a className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors">
+                    <span className="text-sm font-medium text-gray-900">Construction</span>
+                  </a>
+                </Link>
+                <Link href="/tenders?category=it">
+                  <a className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors">
+                    <span className="text-sm font-medium text-gray-900">IT & Technology</span>
+                  </a>
+                </Link>
+                <Link href="/tenders?category=healthcare">
+                  <a className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors">
+                    <span className="text-sm font-medium text-gray-900">Healthcare</span>
+                  </a>
+                </Link>
+                <Link href="/tenders?category=education">
+                  <a className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors">
+                    <span className="text-sm font-medium text-gray-900">Education</span>
+                  </a>
+                </Link>
               </div>
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Upcoming Deadlines</h2>
               <div className="space-y-4">
-                <a href="/tenders/1" className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-md transition-colors">
-                  <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-red-100 text-red-600">
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
-                      Medical Supplies Procurement
-                    </p>
-                    <p className="text-xs text-gray-500 truncate">
-                      Ministry of Health
-                    </p>
-                    <p className="text-xs font-medium text-red-600">
-                      Deadline: April 5, 2025 (5 days left)
-                    </p>
-                  </div>
-                </a>
-                <a href="/tenders/2" className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-md transition-colors">
-                  <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-yellow-100 text-yellow-600">
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
-                      School Furniture Supply
-                    </p>
-                    <p className="text-xs text-gray-500 truncate">
-                      Ministry of Education
-                    </p>
-                    <p className="text-xs font-medium text-yellow-600">
-                      Deadline: April 10, 2025 (10 days left)
-                    </p>
-                  </div>
-                </a>
+                <Link href="/tenders/1">
+                  <a className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-md transition-colors">
+                    <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-red-100 text-red-600">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        Medical Supplies Procurement
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        Ministry of Health
+                      </p>
+                      <p className="text-xs font-medium text-red-600">
+                        Deadline: April 5, 2025 (5 days left)
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+                <Link href="/tenders/2">
+                  <a className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-md transition-colors">
+                    <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-yellow-100 text-yellow-600">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        School Furniture Supply
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        Ministry of Education
+                      </p>
+                      <p className="text-xs font-medium text-yellow-600">
+                        Deadline: April 10, 2025 (10 days left)
+                      </p>
+                    </div>
+                  </a>
+                </Link>
               </div>
             </div>
           </div>
