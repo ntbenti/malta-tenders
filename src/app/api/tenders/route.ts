@@ -2,8 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
+interface APIResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+
 export async function GET(request: NextRequest) {
   try {
+    const searchParams = request.nextUrl.searchParams;
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    
     // Mock data for tenders API
     const tenders = [
       {
@@ -57,53 +67,19 @@ export async function GET(request: NextRequest) {
         category: "Transport & Logistics"
       }
     ];
-    
-    // Get query parameters
-    const searchQuery = request.nextUrl.searchParams.get('search') || '';
-    const category = request.nextUrl.searchParams.get('category') || '';
-    const authority = request.nextUrl.searchParams.get('authority') || '';
-    const status = request.nextUrl.searchParams.get('status') || '';
-    
-    // Filter tenders based on query parameters
-    let filteredTenders = tenders;
-    
-    if (searchQuery) {
-      filteredTenders = filteredTenders.filter(tender => 
-        tender.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tender.contracting_authority.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    
-    if (category) {
-      filteredTenders = filteredTenders.filter(tender => 
-        tender.category.toLowerCase() === category.toLowerCase()
-      );
-    }
-    
-    if (authority) {
-      filteredTenders = filteredTenders.filter(tender => 
-        tender.contracting_authority.toLowerCase() === authority.toLowerCase()
-      );
-    }
-    
-    if (status) {
-      filteredTenders = filteredTenders.filter(tender => 
-        tender.status.toLowerCase() === status.toLowerCase()
-      );
-    }
-    
-    return NextResponse.json({
+
+    const response: APIResponse<typeof tenders> = {
       success: true,
-      tenders: filteredTenders,
-      total: filteredTenders.length
-    });
+      data: tenders
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
-    console.error('Error fetching tenders:', error);
-    
-    return NextResponse.json({
+    const response: APIResponse<never> = {
       success: false,
-      message: 'Error fetching tenders',
-      error: error instanceof Error ? error.message : String(error)
-    }, { status: 500 });
+      error: error instanceof Error ? error.message : 'An unexpected error occurred'
+    };
+    
+    return NextResponse.json(response, { status: 500 });
   }
 }

@@ -1,10 +1,13 @@
-import { BaseScraper, ScrapedTender } from './base-scraper';
+import { BaseScraper } from './base-scraper';
 import { ETendersScraper } from './etenders-scraper';
 import { MITAScraper } from './mita-scraper';
+import { ScrapedTender, Tender } from '@/lib/types/tender';
 import { v4 as uuidv4 } from 'uuid';
 
 export class ScraperManager {
   private scrapers: BaseScraper[];
+  private readonly maxRetries = 3;
+  private readonly retryDelay = 5000;
   
   constructor() {
     this.scrapers = [
@@ -12,38 +15,51 @@ export class ScraperManager {
       new MITAScraper()
     ];
   }
-  
-  async scrapeAllSources(): Promise<{
-    tenders: ScrapedTender[],
-    stats: {
-      sourceId: string,
-      sourceName: string,
-      tendersCount: number,
-      success: boolean,
-      error?: string
-    }[]
-  }> {
+
+  private async retryOperation<T>(
+    operation: () => Promise<T>,
+    retries = this.maxRetries
+  ): Promise<T> {
+    try {
+      return await operation();
+    } catch (error) {
+      if (retries > 0) {
+        await new Promise(resolve => setTimeout(resolve, this.retryDelay));
+        return this.retryOperation(operation, retries - 1);
+      }
+      throw error;
+    }
+  }
+
+  async scrapeAllSources(): Promise<{ tenders: ScrapedTender[], stats: any[] }> {
     const allTenders: ScrapedTender[] = [];
-    const stats: {
-      sourceId: string,
-      sourceName: string,
-      tendersCount: number,
-      success: boolean,
-      error?: string
-    }[] = [];
+    const stats: any[] = [];
     
     for (const scraper of this.scrapers) {
       try {
         console.log(`Starting scrape for ${scraper.getName()}`);
         
         const startTime = new Date();
-        const tenders = await scraper.fetchTenders();
+        const tenders = await this.retryOperation(() => scraper.fetchTenders());
         
-        // Add unique IDs to tenders if they don't have one
         const processedTenders = tenders.map(tender => ({
           ...tender,
-          id: uuidv4()
-        }));
+          id: uuidv4(),
+          scrapedAt: new Date().toISOString(),
+          sourceId: tender.sourceId || scraper.getId(),
+          sourceName: tender.sourceName || scraper.getName(),
+          sourceUrl: tender.sourceUrl,
+          title: tender.title,
+          description: tender.description,
+          contractingAuthority: tender.contractingAuthority,
+          procurementType: tender.procurementType,
+          procedureType: tender.procedureType,
+          cpvCodes: tender.cpvCodes || [],
+          submissionDeadline: tender.submissionDeadline,
+          publicationDate: tender.publicationDate,
+          status: tender.status,
+          documents: tender.documents || []
+        } as ScrapedTender));
         
         allTenders.push(...processedTenders);
         
@@ -54,19 +70,14 @@ export class ScraperManager {
           success: true
         });
         
-        console.log(`Completed scrape for ${scraper.getName()}: ${tenders.length} tenders found`);
-        
-        // In a real implementation, this would log to the database
         await this.logScrapingResult(scraper.getId(), {
           startTime,
           endTime: new Date(),
           status: 'success',
-          tendersAdded: tenders.length,
-          tendersUpdated: 0
+          tendersCount: tenders.length
         });
       } catch (error) {
-        console.error(`Error scraping ${scraper.getName()}: ${error}`);
-        
+        console.error(`Error scraping ${scraper.getName()}:`, error);
         stats.push({
           sourceId: scraper.getId(),
           sourceName: scraper.getName(),
@@ -74,45 +85,32 @@ export class ScraperManager {
           success: false,
           error: error instanceof Error ? error.message : String(error)
         });
-        
-        // In a real implementation, this would log to the database
-        await this.logScrapingResult(scraper.getId(), {
-          startTime: new Date(),
-          endTime: new Date(),
-          status: 'error',
-          tendersAdded: 0,
-          tendersUpdated: 0,
-          errorMessage: error instanceof Error ? error.message : String(error)
-        });
       }
     }
     
     return { tenders: allTenders, stats };
   }
   
-  private async logScrapingResult(sourceId: string, result: {
-    startTime: Date,
-    endTime: Date,
-    status: string,
-    tendersAdded: number,
-    tendersUpdated: number,
-    errorMessage?: string
-  }): Promise<void> {
-    // In a real implementation, this would save to the database
-    console.log(`Logging scraping result for ${sourceId}:`, result);
-  }
-  
-  async saveTendersToDatabase(tenders: ScrapedTender[]): Promise<void> {
-    // In a real implementation, this would save to the database
+  async saveTendersToDatabase(tenders: Tender[]): Promise<void> {
     console.log(`Saving ${tenders.length} tenders to database`);
     
-    // Process each tender
     for (const tender of tenders) {
-      // Check if tender already exists
-      // If exists, update it
-      // If not, insert it
-      // Also handle documents and category mappings
-      console.log(`Processing tender: ${tender.title}`);
+      try {
+        console.log(`Processing tender: ${tender.title}`);
+        // Implementation for saving to database
+      } catch (error) {
+        console.error(`Error saving tender ${tender.id}:`, error);
+        throw error;
+      }
     }
+  }
+
+  private async logScrapingResult(scraperId: string, result: {
+    startTime: Date;
+    endTime: Date;
+    status: string;
+    tendersCount: number;
+  }): Promise<void> {
+    // Implementation for logging scraping results
   }
 }

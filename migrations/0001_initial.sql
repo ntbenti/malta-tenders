@@ -1,3 +1,12 @@
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS tender_category_mappings;
+DROP TABLE IF EXISTS tender_documents;
+DROP TABLE IF EXISTS tenders;
+DROP TABLE IF EXISTS tender_categories;
+DROP TABLE IF EXISTS scraping_logs;
+DROP TABLE IF EXISTS scraping_sources;
+DROP TABLE IF EXISTS users;
+
 -- Create tender categories table
 CREATE TABLE IF NOT EXISTS tender_categories (
   id TEXT PRIMARY KEY,
