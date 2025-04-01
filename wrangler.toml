@@ -22,4 +22,9 @@ crons = ["0 6 * * *"]
 
 [build]
 command = "npm run build"
-output_dir = ".next"
+
+[build.upload]
+format = "directory"
+
+[pages]
+pages_build_output_dir = ".next"
