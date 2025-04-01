@@ -6,7 +6,6 @@ compatibility_date = "2024-01-01"
 JWT_SECRET = "91140990538410712862953981830703"
 ENVIRONMENT = "production"
 APP_URL = "https://malta-tenders.pages.dev"
-# A new secure random string for CRON_SECRET
 CRON_SECRET = "c8b74a9f3d6e2150b9ac7f85m4p6q9r2"
 
 [[d1_databases]]
@@ -20,3 +19,7 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 
 [triggers]
 crons = ["0 6 * * *"]
+
+# Add Pages configuration
+[pages_build_output_dir]
+value = ".next"
