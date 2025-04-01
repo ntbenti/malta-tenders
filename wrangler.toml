@@ -20,6 +20,6 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 [triggers]
 crons = ["0 6 * * *"]
 
-# Add Pages configuration
-[pages_build_output_dir]
-value = ".next"
+[build]
+command = "npm run build"
+output_dir = ".next"
