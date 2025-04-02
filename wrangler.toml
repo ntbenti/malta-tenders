@@ -3,7 +3,12 @@ compatibility_date = "2024-01-01"
 
 [build]
 command = "npm ci && npm run build"
-pages_build_output_dir = ".next"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[site]
+bucket = ".next"
 
 [vars]
 JWT_SECRET = "91140990538410712862953981830703"
@@ -22,5 +27,9 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 
 [triggers]
 crons = ["0 6 * * *"]
+
+# Build-time environment variables
+[build.environment]
+NEXT_PUBLIC_APP_URL = "https://malta-tenders.pages.dev"
 
 
