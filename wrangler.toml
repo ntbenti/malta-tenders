@@ -20,6 +20,9 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 [triggers]
 crons = ["0 6 * * *"]
 
-[pages]
-pages_build_output_dir = ".next"
+[build]
 command = "npm install && npm run build"
+output_dir = ".next"
+
+[site]
+bucket = ".next"
