@@ -176,4 +176,10 @@ export class SearchService {
     // Implement reindexing logic here if needed
     console.log('Reindexing tenders...');
   }
+
+  async index(data: any): Promise<void> {
+    // Implement search indexing logic
+  }
 }
+
+export default new SearchService();
