@@ -1,8 +1,5 @@
-export class NotificationService {
-  async notify(message: string): Promise<void> {
+export const notificationService = {
+  createDeadlineReminders: async () => {
     // Implement notification logic
-    console.log('Notification:', message);
   }
-}
-
-export default new NotificationService();
+};

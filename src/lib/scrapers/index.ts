@@ -3,5 +3,5 @@ export interface Scraper {
   scrape(): Promise<any>;
 }
 
-// Export your scrapers here
-export const scrapers: Scraper[] = [];
+// Export your scraper implementations
+export const scrapers = [];

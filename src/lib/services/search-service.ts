@@ -182,4 +182,8 @@ export class SearchService {
   }
 }
 
-export default new SearchService();
+export const searchService = {
+  reindexTenders: async () => {
+    // Implement search indexing logic
+  }
+};
