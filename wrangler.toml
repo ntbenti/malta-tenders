@@ -6,6 +6,7 @@ command = "npm ci && npm run build"
 
 [build.environment]
 NODE_VERSION = "18"
+NEXT_PUBLIC_APP_URL = "https://malta-tenders.pages.dev"
 
 [site]
 bucket = ".next"
@@ -27,9 +28,5 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 
 [triggers]
 crons = ["0 6 * * *"]
-
-# Build-time environment variables
-[build.environment]
-NEXT_PUBLIC_APP_URL = "https://malta-tenders.pages.dev"
 
 
