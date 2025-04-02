@@ -20,11 +20,6 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 [triggers]
 crons = ["0 6 * * *"]
 
-[build]
-command = "npm install && npm run build"
-
-[build.upload]
-format = "directory"
-
 [pages]
-build_output_directory = ".next"
+pages_build_output_dir = ".next"
+command = "npm install && npm run build"
