@@ -2,6 +2,9 @@ name = "malta-tenders"
 main = "src/worker.ts"
 compatibility_date = "2024-01-01"
 
+# Add this line for Pages configuration
+pages_build_output_dir = ".next"
+
 [vars]
 JWT_SECRET = "91140990538410712862953981830703"
 ENVIRONMENT = "production"
@@ -20,9 +23,4 @@ id = "e550ae7153834f4ebb6a913093b48f86"
 [triggers]
 crons = ["0 6 * * *"]
 
-[build]
-command = "npm install && npm run build"
-output_dir = ".next"
 
-[site]
-bucket = ".next"
